@@ -8,7 +8,7 @@ from value import SEND_MSG_URI
 def send_message(access_token: str) -> dict:
     """
     @params:
-        access_token    : str - 액세스 토큰값
+        access_token    : str - 액세스 토큰
     @return:
         : dict - JSON 형식의 결과값(응답코드 등)
     """

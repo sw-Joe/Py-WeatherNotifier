@@ -1,7 +1,7 @@
 import json
 
 
-def j_read(path: str, keyword: str) -> str:
+def read_json(path: str, keyword: str) -> str:
     """
     JSON 파일 읽기
     @params:
@@ -16,7 +16,7 @@ def j_read(path: str, keyword: str) -> str:
         return json_parse[keyword]
 
 
-def j_write(path: str, keyword: str, value: str) -> None:
+def write_json(path: str, keyword: str, value: str) -> None:
     """
     JSON 파일 쓰기
     @params:
@@ -41,7 +41,7 @@ class Write:
     def __init__(self, path):
         self.path = path
 
-    def j_writes(self, keyword: str, value: str) -> None:
+    def write_jsons(self, keyword: str, value: str) -> None:
         """
         JSON 파일 쓰기
         @params:

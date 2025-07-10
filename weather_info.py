@@ -1,7 +1,7 @@
 import requests
-from bs4 import BeautifulSoup
+import BeautifulSoup
 
-from io_func import j_read
+from io_func import read_json
 from value import PATH_KEY
 
 
@@ -17,7 +17,7 @@ NAVER_WEATHER_INFO = parsing.select_one(
 # OpenWeather api weatherInfo
 
 city_name: str = "seoul"
-key_OW = j_read(PATH_KEY, "openWeather_api_key")
+key_OW = read_json(PATH_KEY, "openWeather_api_key")
 lang_code: str = "kr"
 
 open_wthr_URL: str = f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={key_OW}&lang={lang_code}&units=metric"

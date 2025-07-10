@@ -1,6 +1,6 @@
 import json
 
-from io_func import j_read
+from io_func import read_json
 
 
 # file PATH
@@ -11,7 +11,7 @@ PATH_TOKEN: str = r"./plaintext/token.json"
 
 # API 요청에 필요한 값들을 JSON파일에서 import
 # I/O
-API_KEY = j_read(PATH_KEY, "kakao_api_key")
+API_KEY = read_json(PATH_KEY, "kakao_api_key")
 
 
 # 인가코드 요청 - 로그인

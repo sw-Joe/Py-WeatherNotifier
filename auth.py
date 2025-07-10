@@ -1,12 +1,18 @@
+import os
 import webbrowser
-from time import sleep, strftime
 
+from dotenv import load_dotenv
 import requests
 
 from err import InvalidTokenRequest, RefreshTokenStillValid
-from io_func import Write, j_read, j_write
-from value import (API_KEY, INQUIRY_ACCESS_TOKEN_URI, OAUTH_URI, PATH_TEST,
+from io_func import Write, read_json, write_json
+from value import (INQUIRY_ACCESS_TOKEN_URI, OAUTH_URI,
                    PATH_TOKEN, REDIRECT_URI, auth_code_URI)
+
+
+
+load_dotenv(verbose=True)
+API_KEY = os.getenv('API_KEY')
 
 
 def request_auth_code() -> None:
@@ -25,8 +31,6 @@ def request_auth_code() -> None:
     while True:
         access_token_input = input("URL: ")
         input_content = access_token_input.replace("URL: ", "")
-        # regex = compile(r"https://example.com/oauth?code=(.+)")
-        # input_content = regex.match(input_content)
         input_content = input_content[31:]
 
         if input_content == "" or None:
@@ -36,12 +40,11 @@ def request_auth_code() -> None:
             break
 
     # TEST CODE
-    j_write(PATH_TEST, "authorization_code", access_token_input)
-    j_read(PATH_TEST, "authorization_code")
-    '''
-    # RUNTIME CODE
-    j_write(PATH_TOKEN, "authorization_code", access_token_input)
-    j_read(PATH_TOKEN, "authorization_code")
+    write_json(PATH_TEST, "authorization_code", access_token_input)
+    read_json(PATH_TEST, "authorization_code")
+    ''' RUNTIME CODE
+    write_json(PATH_TOKEN, "authorization_code", access_token_input)
+    read_json(PATH_TOKEN, "authorization_code")
     '''
 
 
@@ -77,8 +80,8 @@ def issue_token(authorization_code: str) -> None:
         # refresh token값이 갱신되지 않았다면 유효기간이 1개월 미만으로 남은 경우일 가능성도
     else:  # 에러 발생하지 않을 시
         PATH = Write(PATH_TEST)
-        PATH.j_writes("refresh_token", refresh_token)
-        PATH.j_writes("access_token", access_token)
+        PATH.write_jsons("refresh_token", refresh_token)
+        PATH.write_jsons("access_token", access_token)
     finally:  # 에러 발생 여부와 관계없이 실행
         content_keys: list = content.keys()
         for key in content_keys:
@@ -152,4 +155,4 @@ def renew_both_token(refresh_token: str) -> None:
         # issue_token()으로 재발급 요청 필요
         raise RefreshTokenStillValid
     else:
-        j_write(PATH_TOKEN, "refresh_token", refresh_token)
+        write_json(PATH_TOKEN, "refresh_token", refresh_token)
