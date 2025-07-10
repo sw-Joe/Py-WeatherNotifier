@@ -1,3 +1,4 @@
+import logging as log
 import os
 import webbrowser
 
@@ -7,12 +8,17 @@ import requests
 from err import InvalidTokenRequest, RefreshTokenStillValid
 from io_func import Write, read_json, write_json
 from value import (INQUIRY_ACCESS_TOKEN_URI, OAUTH_URI,
-                   PATH_TOKEN, REDIRECT_URI, auth_code_URI)
+    PATH_TOKEN, REDIRECT_URI, auth_code_URI)
 
 
 
 load_dotenv(verbose=True)
-API_KEY = os.getenv('API_KEY')
+KAKAO_API_KEY = os.getenv('KAKAO_API_KEY')
+
+log.basicConfig(
+    level=log.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 
 def request_auth_code() -> None:
@@ -21,10 +27,9 @@ def request_auth_code() -> None:
     @params, @return:
         None
     """
-
-    print("[notice]Initiating browser to authorization")
-    print("[notice]After login, please copy & paste the URL to the Terminal.")
-    print(f"[notice]Requesting  {auth_code_URI}")
+    log.debug("Authoriation을 위한 브라우저")
+    log.info("로그인 후, URL을 터미널에 복사&붙여넣기 하여 주세요")
+    log.info(f"다음을 요청합니다: {auth_code_URI}")
 
     webbrowser.open(auth_code_URI, new=1, autoraise=True)
 
@@ -34,14 +39,14 @@ def request_auth_code() -> None:
         input_content = input_content[31:]
 
         if input_content == "" or None:
-            print("[alert]Input value vacant. Retry required")
+            log.warning("빈 입력값입니다. 다시 시도해주세요")
         elif input_content != "" or None:
-            print(f"INPUT: {input_content[:10]} ... {input_content[-10:]}")
+            log.info(f"입력값: input_content[:10] ... {input_content[-10:]}")
             break
 
     # TEST CODE
-    write_json(PATH_TEST, "authorization_code", access_token_input)
-    read_json(PATH_TEST, "authorization_code")
+    write_json(PATH_TOKEN, "authorization_code", access_token_input)
+    read_json(PATH_TOKEN, "authorization_code")
     ''' RUNTIME CODE
     write_json(PATH_TOKEN, "authorization_code", access_token_input)
     read_json(PATH_TOKEN, "authorization_code")
@@ -64,7 +69,7 @@ def issue_token(authorization_code: str) -> None:
 
     data = {
         "grant_type": "authorization_code",
-        "client_id": API_KEY,
+        "client_id": KAKAO_API_KEY,
         "redirect_URI": REDIRECT_URI,
         "code": authorization_code,
     }
@@ -79,14 +84,15 @@ def issue_token(authorization_code: str) -> None:
         raise InvalidTokenRequest
         # refresh token값이 갱신되지 않았다면 유효기간이 1개월 미만으로 남은 경우일 가능성도
     else:  # 에러 발생하지 않을 시
-        PATH = Write(PATH_TEST)
+        PATH = Write(PATH_TOKEN)
         PATH.write_jsons("refresh_token", refresh_token)
         PATH.write_jsons("access_token", access_token)
     finally:  # 에러 발생 여부와 관계없이 실행
         content_keys: list = content.keys()
         for key in content_keys:
             print("{0:<24} | {1}".format(key, content[key]))
-#       요청 성공 시 response
+        '''
+        # 요청 성공 시 response
         # if "error" in content_keys:
 
         # printing response
@@ -97,11 +103,10 @@ def issue_token(authorization_code: str) -> None:
             #   refresh token             : {content["refresh_token"]}
             #   refresh token expires in  : {content["refresh_token_expires_in"]}
             #         """
+        '''
+
     """
-    # Logging
-    time_info = strftime('%Y%m%d%H%M%S')
     # I/O
-    
     with open(f"./response/log/{time_info}_token_log.json", "w") as log:
         json.dump(content, log, indent="\t")
         '''

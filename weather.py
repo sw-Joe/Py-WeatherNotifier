@@ -1,5 +1,5 @@
 import requests
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup
 
 from io_func import read_json
 from value import PATH_KEY
@@ -9,7 +9,7 @@ from value import PATH_KEY
 nav_search_URL: str = "https://search.naver.com/search.naver?where=nexearch&sm=top_sug.pre&fbm=1&acr=1&acq=오늘+서울+날씨&qdt=0&ie=utf8&query=오늘+서울+날씨"
 
 basic_info = requests.get(nav_search_URL)
-parsing = bs(basic_info.text, "html.parser")
+parsing = BeautifulSoup(basic_info.text, "html.parser")
 NAVER_WEATHER_INFO = parsing.select_one(
     "div.temperature_text").text.replace("현재 온도", "")
 
@@ -31,6 +31,7 @@ OW_WEATHER_INFO = str(OW_json["main"]["temp"]) + "°"
 icon_code = str(OW_json["weather"][0]["icon"])
 # list indices must be integers or slices, not str
 
+# load icon img 
 OW_Weather_icon = f"https://openweathermap.org/img/wn/{icon_code}@2x.png"
 
 '''

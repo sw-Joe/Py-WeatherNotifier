@@ -1,17 +1,10 @@
-import json
-
-from io_func import read_json
-
-
 # file PATH
 PATH_KEY: str = r"./plaintext/key.json"
-
 PATH_TOKEN: str = r"./plaintext/token.json"
 
 
-# API 요청에 필요한 값들을 JSON파일에서 import
-# I/O
-API_KEY = read_json(PATH_KEY, "kakao_api_key")
+# # API 요청에 필요한 값들을 JSON파일에서 import --> 환경변수로 대체
+# API_KEY = read_json(PATH_KEY, "kakao_api_key")
 
 
 # 인가코드 요청 - 로그인
@@ -36,5 +29,5 @@ SEND_MSG_URI: str = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
 INQUIRY_ACCESS_TOKEN_URI: str = "https://kapi.kakao.com/v1/user/access_token_info"
 
 
-# Refresh token 과 Access token
+# Access token, Refresh token 두 가지 토큰이 존재
 # Refresh token은 Access token과 비교해서 상대적으로 긴 유효기간을 가지고 있음.
