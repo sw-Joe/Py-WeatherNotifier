@@ -10,7 +10,7 @@ from value import PATH_TOKEN
 
 # print(send_message(j_read(PATH_TOKEN, "access_token")))
 
-
+'''
 from io_mock import IO, read, write
 
 
@@ -19,3 +19,7 @@ io = IO(PATH_TOKEN)
 read_val = io.file_scan(read("authorization_code"))
 
 print(read_val)
+'''
+
+import io_func
+

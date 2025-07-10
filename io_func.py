@@ -15,7 +15,7 @@ def read_json(path: str, keyword: str) -> str:
         json_parse = json.load(file)
         return json_parse[keyword]
 
-
+'''
 def write_json(path: str, keyword: str, value: str) -> None:
     """
     JSON 파일 쓰기
@@ -35,7 +35,7 @@ def write_json(path: str, keyword: str, value: str) -> None:
     # 기존 파일 덮어쓰기
     with open(path, "w", encoding="utf-8") as file:
         json.dump(json_parse, file, indent="\t")
-
+'''
 
 class Write:
     def __init__(self, path):
