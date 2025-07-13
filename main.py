@@ -1,12 +1,12 @@
-# from auth import issue_token, request_auth_code
-# from io_func import j_read
+from auth import issue_token, request_auth_code
+from io_func import read_json
 # from send_msg import send_message
 from value import PATH_TOKEN
 
 
-# request_auth_code()
+request_auth_code()
 
-# issue_token(j_read(PATH_TOKEN, "authorization_code"))
+# issue_token(read_json(PATH_TOKEN, "authorization_code"))
 
 # print(send_message(j_read(PATH_TOKEN, "access_token")))
 
@@ -20,6 +20,3 @@ read_val = io.file_scan(read("authorization_code"))
 
 print(read_val)
 '''
-
-import io_func
-
