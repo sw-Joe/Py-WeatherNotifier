@@ -13,8 +13,8 @@ PATH_TOKEN: str = r"./plaintext/token.json"
 load_dotenv(verbose=True)
 KAKAO_API_KEY = os.getenv('KAKAO_API_KEY')
 
-REDIRECT_URI: str = "http://localhost:8000/oauth/callback"    # 테스트용
-# REDIRECT_URI: str = "https://example.com/oauth"
+# REDIRECT_URI: str = "http://localhost:8000/oauth/callback"    # 테스트용
+REDIRECT_URI: str = "https://example.com/oauth"
 """
 Http Response Code 리다이렉트
 """

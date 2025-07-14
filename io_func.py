@@ -51,6 +51,7 @@ JSON 파일을 처리하는 경우 반드시 파일을 읽고
 다만 이 과정에서 읽는 부분의 코드가 중복되기에 이 부분을 수정하기 위해
 리펙토링
 """
+'''
 class IO:
     def __init__(self, path):
         self.path = path
@@ -84,3 +85,4 @@ def write(self, keyword: str, value: str, **kwargs) -> None:
     # override previous file
     with open(self.path, "w", encoding="utf-8") as file:
         json.dump(file, file, indent="\t")
+'''

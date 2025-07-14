@@ -1,6 +1,6 @@
 import logging as log
 import os
-# import webbrowser
+import webbrowser
 
 import requests
 
@@ -27,8 +27,8 @@ def request_auth_code() -> None:
     log.info("로그인 후, URL을 터미널에 복사&붙여넣기 하여 주세요")
     log.info(f"다음을 요청합니다: {auth_code_URI[:30]} ...")
     log.debug(auth_code_URI)    # 디버그용
-    os.system(f'cmd.exe /C start {auth_code_URI}')
-    # webbrowser.open(auth_code_URI, new=1, autoraise=True)
+    # os.system(f'cmd.exe /C start {auth_code_URI}')    # WSL가 개발환경일 경우
+    webbrowser.open(auth_code_URI, new=1, autoraise=True)    # WSL를 제외한 다른 개발환경
 
     # 올바른 값이 input으로 입력되길 무한히 기다림
     while True:
@@ -40,7 +40,7 @@ def request_auth_code() -> None:
         if input_content == "" or None:
             log.warning("빈 입력값입니다. 다시 시도해주세요")
         elif input_content != "" or None:
-            log.info(f"입력값: input_content[:10] ... {input_content[-10:]}")
+            log.info(f"입력값: {input_content[:10]} ... {input_content[-10:]}")
             break
 
     Path: Write = Write(PATH_TOKEN)
