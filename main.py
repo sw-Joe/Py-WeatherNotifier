@@ -4,19 +4,12 @@ from io_func import read_json
 from value import PATH_TOKEN
 
 
-request_auth_code()
 
-# issue_token(read_json(PATH_TOKEN, "authorization_code"))
-
-# print(send_message(j_read(PATH_TOKEN, "access_token")))
-
-'''
-from io_mock import IO, read, write
+def main():
+    request_auth_code()
+    # issue_token(read_json(PATH_TOKEN, "authorization_code"))
+    # print(send_message(j_read(PATH_TOKEN, "access_token")))
 
 
-io = IO(PATH_TOKEN)
-
-read_val = io.file_scan(read("authorization_code"))
-
-print(read_val)
-'''
+if __name__ == "__main__":
+    main()

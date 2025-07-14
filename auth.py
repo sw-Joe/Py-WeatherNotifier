@@ -9,9 +9,11 @@ from io_func import Write, read_json
 from value import (KAKAO_API_KEY,INQUIRY_ACCESS_TOKEN_URI, OAUTH_URI,
     PATH_TOKEN, REDIRECT_URI, auth_code_URI)
 
+
+
 log.basicConfig(
     level=log.INFO,
-    format='%(asctime)s|%(levelname)s|%(message)s'
+    format='%(asctime)s|%(levelname)s| %(message)s'
 )
 
 
@@ -50,7 +52,6 @@ def issue_token(authorization_code: str) -> None:
     """
     - 토큰 최초 발급 시
     - refresh token 만료 시 (토큰 발급 시에는 항상 access, refresh token이 함께 발급)
-
     @params
         authorization_code  : str - 인가코드값 
     @return:
