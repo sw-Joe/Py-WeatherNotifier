@@ -14,7 +14,7 @@ def send_message(access_token: str) -> dict:
     """
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': "Bearer " + access_token
+        'Authorization': f"Bearer {access_token}"
     }
     # KakaoTalk Rest API parameter
     data = {
@@ -32,6 +32,7 @@ def send_message(access_token: str) -> dict:
                 "image_url": OW_Weather_icon,
                 "image_width": "200",
                 "image_height": "200",
+                
                 "link": {
                     "web_url": "https://openweathermap.org/",
                     "mobile_url": "https://openweathermap.org/",

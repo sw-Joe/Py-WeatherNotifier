@@ -5,7 +5,7 @@ import webbrowser
 import requests
 
 from err import InvalidTokenRequest, RefreshTokenStillValid
-from io_func import Write, read_json
+from io_func import Path
 from value import (KAKAO_API_KEY,INQUIRY_ACCESS_TOKEN_URI, OAUTH_URI,
     PATH_TOKEN, REDIRECT_URI, auth_code_URI)
 
@@ -43,9 +43,9 @@ def request_auth_code() -> None:
             log.info(f"입력값: {input_content[:10]} ... {input_content[-10:]}")
             break
 
-    Path: Write = Write(PATH_TOKEN)
-    Path.write_jsons("authorization_code", access_token_input)
-    read_json(PATH_TOKEN, "authorization_code")
+    f_token: Path = Path(PATH_TOKEN)
+    f_token.write_jsons("authorization_code", access_token_input)
+    f_token.search_json("authorization_code")
 
 
 def issue_token(authorization_code: str) -> None:
@@ -78,14 +78,14 @@ def issue_token(authorization_code: str) -> None:
         raise InvalidTokenRequest
         # refresh token값이 갱신되지 않았다면 유효기간이 1개월 미만으로 남은 경우일 가능성도
     else:  # 에러 발생하지 않을 시
-        Path: Write = Write(PATH_TOKEN)
-        Path.write_jsons("refresh_token", refresh_token)
-        Path.write_jsons("access_token", access_token)
+        f_token: Path = Path(PATH_TOKEN)
+        f_token.write_jsons("refresh_token", refresh_token)
+        f_token.write_jsons("access_token", access_token)
     finally:  # 에러 발생 여부와 관계없이 실행
         content_keys: list = content.keys()
 
         for key in content_keys:
-            print("{0:<24} | {1}".format(key, content[key]))
+            log.debug("{0:<24} | {1}".format(key, content[key]))
         # token_type, access_token, expires_in, refresh_token, refresh_token_expires_in을 반환
 
 
@@ -99,13 +99,13 @@ def access_token_info(access_token: str) -> None:
     """
 
     headers: dict = {
-        'Authorization': "Bearer " + access_token
+        'Authorization': f"Bearer {access_token}"
     }
 
     token_info = requests.get(INQUIRY_ACCESS_TOKEN_URI, headers=headers).json()
     token_info_keys: list = token_info.keys()
     for key in token_info_keys:
-        print("{0:<24} | {1}".format(key, token_info[key]))
+        log.debug("{0:<24} | {1}".format(key, token_info[key]))
 
 
 def renew_both_token(refresh_token: str) -> None:
@@ -132,5 +132,5 @@ def renew_both_token(refresh_token: str) -> None:
         # issue_token()으로 재발급 요청 필요
         raise RefreshTokenStillValid
     else:
-        Path: Write = Write(PATH_TOKEN)
-        Path.write_jsons("refresh_token", refresh_token)
+        f_token: Path = Path(PATH_TOKEN)
+        f_token.write_jsons("refresh_token", refresh_token)

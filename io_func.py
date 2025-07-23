@@ -1,24 +1,28 @@
 import json
 
 
-def read_json(path: str, keyword: str) -> str:
-    """
-    JSON 파일 읽기
-    @params:
-        path    : str - json 파일의 경로
-        keyword : str - json 파일에서 검색할 value의 key값에 해당하는 문자열
-    @return
-        :str - params keyword(json key)값에 맞는 값
-    """
 
-    with open(path, "r") as file:
-        json_parse = json.load(file)
-        return json_parse[keyword]
-
-
-class Write:
+class Path:
     def __init__(self, path):
         self.path = path
+        # 파일 경로로 하여금 Path 객체를 생성하면 일단 읽기모드로 파일을 열어 전체를 읽는다.
+        self.r_mode = open(self.path, "r")
+        self.json_parse = json.load(self.r_mode)
+
+
+    def search_json(self, keyword: str) -> str:
+        """
+        JSON 파일에서 원하는 값을 찾기
+        @params:
+            keyword : str - json 파일에서 검색할 value의 key값에 해당하는 문자열
+        @return
+            :str - params keyword(json key)값에 맞는 값
+        """
+
+        finding: str = self.json_parse[keyword]
+        self.r_mode.close()
+        return finding
+
 
     def write_jsons(self, keyword: str, value: str) -> None:
         """
@@ -30,14 +34,22 @@ class Write:
             None
         """
 
-        with open(self.path, "r") as file:
-            json_parse = json.load(file)
-            # 데이터 수정
-            json_parse[keyword] = value
+        # 데이터 수정
+        self.json_parse[keyword] = value
+        self.r_mode.close()
 
         # 기존 파일 덮어쓰기
-        with open(self.path, "w", encoding="utf-8") as file:
-            json.dump(json_parse, file, indent="\t")
+        with open(self.path, "w", encoding="utf-8") as w_mode:
+            json.dump(self.json_parse, w_mode, indent="\t")
+
+'''
+# test code
+if __name__ == "__main__":
+    PATH_TEST = "./plaintext/test.json"
+    f: Path = Path(PATH_TEST)
+    f.write_jsons("authorization_code", "test_value_this_is_authcode")
+    print(f.search_json("authorization_code"))
+'''
 
 
 """
@@ -71,18 +83,4 @@ class IO:
     
     def __del__(self):
         print("IO Object has been successfully Deleted.")
-
-
-# 데코레이터를 사용하는 것은 적절하지 않음
-@IO.file_scan
-def read(keyword: str, file) -> str:
-    return file[keyword]
-
-@IO.file_scan
-def write(self, keyword: str, value: str, **kwargs) -> None:
-    kwargs[keyword] = value
-
-    # override previous file
-    with open(self.path, "w", encoding="utf-8") as file:
-        json.dump(file, file, indent="\t")
 '''

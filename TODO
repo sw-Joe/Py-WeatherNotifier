@@ -1,0 +1,21 @@
+# TODO
+
+OFFLINE 작업용
+
+## rest api 요청 시 json 객체과 함께 요청 처리하는 과정에 대해 다시 코드 확인
+
+### json 관련 메서드의 기능 다시 확인 [v]
+
+- .json() : dict 객체를 json으로 바꾼다
+- json_override.dumps(json_prev) : 기존 json 객체를 덮어쓴다
+- json.load(file) : file을 읽어 json 객체를 직렬화한다 
+
+---
+
+## 파이썬 decorator 사용 방법에 대해 숙지 [ ]
+
+---
+
+## io_func.py 코드에 decorator 적용하여 코드 리펙터링 [v]
+
+- 데코레이터 대신 `with`을 `file.open()`, `file.close()`로 대체

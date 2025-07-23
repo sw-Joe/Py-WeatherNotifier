@@ -1,6 +1,6 @@
 class InvalidTokenRequest(Exception):
     """
-    잘못된 요청입니다. 토큰은 발급되지 않습니다
+    에러: 잘못된 요청입니다. 토큰이 발급되지 않습니다
     """
 
     def __str__(self):
@@ -9,7 +9,7 @@ class InvalidTokenRequest(Exception):
 
 class RefreshTokenExpired(Exception):
     """
-    리프레시 토큰이 만료되었습니다
+    에러: 리프레시 토큰이 만료되었습니다
     """
 
     def __str__(self):
@@ -18,7 +18,7 @@ class RefreshTokenExpired(Exception):
 
 class RefreshTokenStillValid(Exception):
     """
-    리프레시 토큰이 아직 유효하므로 현재 토큰값을 유지합니다
+    에러: 리프레시 토큰이 아직 유효하므로 현재 토큰값을 유지합니다
     """
 
     def __str__(self):
