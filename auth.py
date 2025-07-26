@@ -6,15 +6,10 @@ import requests
 
 from err import InvalidTokenRequest, RefreshTokenStillValid
 from io_func import Path
+from logconfig
 from value import (KAKAO_API_KEY,INQUIRY_ACCESS_TOKEN_URI, OAUTH_URI,
     PATH_TOKEN, REDIRECT_URI, auth_code_URI)
 
-
-
-log.basicConfig(
-    level=log.INFO,
-    format='%(asctime)s|%(levelname)s| %(message)s'
-)
 
 
 def request_auth_code() -> None:

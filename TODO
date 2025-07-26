@@ -19,3 +19,7 @@ OFFLINE 작업용
 ## io_func.py 코드에 decorator 적용하여 코드 리펙터링 [v]
 
 - 데코레이터 대신 `with`을 `file.open()`, `file.close()`로 대체
+
+---
+
+## 파일 또는 환경변수 읽기 쓰기시에 발생하는 예외에 대한 처리 코드 작성

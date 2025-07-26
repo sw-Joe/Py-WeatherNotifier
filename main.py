@@ -1,16 +1,11 @@
+# import logging as log
+
 from auth import issue_token, request_auth_code
 from io_func import Path
+import logconfig
 # from send_msg import send_message
 from value import PATH_TOKEN
 
-import logging as log
-
-
-
-log.basicConfig(
-    level=log.INFO,
-    format='%(asctime)s|%(levelname)s| %(message)s'
-)
 
 
 def main():

@@ -2,16 +2,20 @@ import os
 
 from dotenv import load_dotenv
 
+from err import ValueNotFound
+
 
 
 # file PATH
-PATH_KEY: str = r"./plaintext/key.json"
 PATH_TOKEN: str = r"./plaintext/token.json"
 
-
-
-load_dotenv(verbose=True)
+### KEY 읽어오는 과정중 예외처리 코드 추가
+try:
+    load_dotenv(verbose=True)
+except:
+    ValueNotFound("환경변수")
 KAKAO_API_KEY = os.getenv('KAKAO_API_KEY')
+OPENWEATHER_API_KEY = os.getenv('OPENWEATHER_API_KEY')
 
 # REDIRECT_URI: str = "http://localhost:8000/oauth/callback"    # 테스트용
 REDIRECT_URI: str = "https://example.com/oauth"
@@ -37,7 +41,6 @@ SEND_MSG_URI: str = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
 """
 카카오톡 메세지 전송
 """
-
 
 # Access token, Refresh token 두 가지 토큰이 존재
 # Refresh token은 Access token과 비교해서 상대적으로 긴 유효기간을 가지고 있음.
